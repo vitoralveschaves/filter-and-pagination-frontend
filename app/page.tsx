@@ -12,9 +12,19 @@ import {
 } from '@/components/ui/card';
 import axios from 'axios';
 
-export default async function Component() {
+type SearchParamsProps = {
+  searchParams?: {
+    search?: string
+  }
+}
 
-  const response = await axios.get("https://apis.codante.io/api/orders-api/orders");
+export default async function Component({ searchParams }: SearchParamsProps) {
+
+  const response = await axios.get("https://apis.codante.io/api/orders-api/orders", {
+    params: {
+      search: searchParams?.search
+    }
+  });
   const orders = response.data.data;
 
   return (
