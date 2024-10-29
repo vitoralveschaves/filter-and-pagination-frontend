@@ -14,7 +14,8 @@ import axios from 'axios';
 
 type SearchParamsProps = {
   searchParams?: {
-    search?: string
+    search?: string,
+    status?: string
   }
 }
 
@@ -22,7 +23,8 @@ export default async function Component({ searchParams }: SearchParamsProps) {
 
   const response = await axios.get("https://apis.codante.io/api/orders-api/orders", {
     params: {
-      search: searchParams?.search
+      search: searchParams?.search,
+      status: searchParams?.status
     }
   });
   const orders = response.data.data;
