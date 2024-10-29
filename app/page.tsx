@@ -15,7 +15,9 @@ import axios from 'axios';
 type SearchParamsProps = {
   searchParams?: {
     search?: string,
-    status?: string
+    status?: string,
+    sort?: string,
+    page: number
   }
 }
 
@@ -24,10 +26,13 @@ export default async function Component({ searchParams }: SearchParamsProps) {
   const response = await axios.get("https://apis.codante.io/api/orders-api/orders", {
     params: {
       search: searchParams?.search,
-      status: searchParams?.status
+      status: searchParams?.status,
+      sort: searchParams?.sort,
+      page: searchParams?.page
     }
   });
   const orders = response.data.data;
+  const links = response.data.meta.links;
 
   return (
     <main className="container px-1 py-10 md:p-10">
@@ -45,7 +50,7 @@ export default async function Component({ searchParams }: SearchParamsProps) {
         <CardContent>
           <OrdersTable orders={orders} />
           <div className="mt-8">
-            <Pagination />
+            <Pagination links={links} />
           </div>
         </CardContent>
       </Card>
